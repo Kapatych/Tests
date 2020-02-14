@@ -1,0 +1,13 @@
+.testCreator {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    flex-grow: 1;
+    width: 100%;
+    background: linear-gradient(to bottom, #386ba0, #0086b7, #00a1c0, #00bab9, #07d0a7);
+
+}
+
+.testCreator h1 {
+    color: #ffffff;
+}

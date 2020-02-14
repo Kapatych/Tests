@@ -1,0 +1,18 @@
+.test {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    flex-grow: 1;
+    width: 100%;
+    background: linear-gradient(to left bottom, #ff6505, #fc434f, #e03c79, #b24993, #7c5398);
+
+}
+
+.test h1 {
+    color: #ffffff;
+    text-align: center;
+}
+
+.testWrapper {
+    width: 600px;
+}

@@ -1,0 +1,18 @@
+.menuToggle {
+    position: fixed;
+    color: #ffffff;
+    top: 40px;
+    left: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: opacity, left .22s ease-in;
+    z-index: 100;
+}
+
+.menuToggle:hover {
+    opacity: .7;
+}
+
+.menuToggle.open {
+    left: 320px;
+}
