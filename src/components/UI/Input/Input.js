@@ -1,8 +1,8 @@
 import React from "react";
 import classes from './Input.module.css';
 
-const Input = ({label, type, value, errorMessage, valid, touched, shouldValidate, onChange}, props) => {
-
+const Input = props => {
+    const {label, type, value, errorMessage, valid, touched, shouldValidate, onChange} = props;
     const inputType = type || 'text';
     const inputId = `${inputType}-${Math.random().toFixed(3) * 1000}`;
     const cls = [classes.input];

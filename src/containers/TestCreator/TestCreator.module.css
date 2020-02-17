@@ -7,7 +7,11 @@
     background: linear-gradient(to bottom, #386ba0, #0086b7, #00a1c0, #00bab9, #07d0a7);
 
 }
-
+.testCreator > div {
+    width: 100%;
+    max-width: 600px;
+    padding: 0 20px;
+}
 .testCreator h1 {
     color: #ffffff;
 }
