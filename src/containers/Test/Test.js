@@ -2,40 +2,26 @@ import React, {Component} from 'react';
 import classes from './Test.module.css';
 import ActiveTest from "../../components/ActiveTest/ActiveTest";
 import FinishedTest from "../../components/FinishedTest/FinishedTest";
+import axios from "../../helpers/axios";
+import Loader from "../../components/UI/Loader/Loader";
+
 
 export default class Test extends Component {
     state = {
         result: 0, // TODO: {questionId: success || error}
         isFinished: false,
         activeQuestion: 0,
-        test: [
-            {
-                id: 1,
-                question: 'How are you?',
-                answers: [
-                    {id: 1, text: 'Answer 1'},
-                    {id: 2, text: 'Answer 2'},
-                    {id: 3, text: 'Answer 3'},
-                    {id: 4, text: 'Answer 4'},
-                ],
-                rightAnswerId: 1
-            },
-            {
-                id: 2,
-                question: 'What\'s the weather today?',
-                answers: [
-                    {id: 1, text: '1 Answer'},
-                    {id: 2, text: '2 Answer'},
-                    {id: 3, text: '3 Answer'},
-                    {id: 4, text: '4 Answer'},
-                ],
-                rightAnswerId: 3
-            },
-        ]
+        test: [],
+        isLoading: true
     };
 
-    componentDidMount = () => {
-        console.log('Test ID =', this.props.match.params.id)
+    async componentDidMount() {
+        try {
+            const response = await axios(`test-list/${this.props.match.params.id}.json`);
+            this.setState({test: response.data, isLoading: false})
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     onAnswerClickHandler = answerId => {
@@ -74,23 +60,25 @@ export default class Test extends Component {
 
     render() {
 
-        const {test, activeQuestion, isFinished} = this.state;
+        const {test, activeQuestion, isLoading, isFinished} = this.state;
 
         return (
             <div className={classes.test}>
                 <div className={classes.testWrapper}>
                     <h1>Test</h1>
                     {
-                        isFinished
-                        ? <FinishedTest onRetry={this.onRetryHandler}
-                                        result={this.state.result}
-                                        quantityQuestions={test.length}/>
+                        isLoading
+                            ? <Loader/>
+                            : isFinished
+                            ? <FinishedTest onRetry={this.onRetryHandler}
+                                            result={this.state.result}
+                                            quantityQuestions={test.length}/>
 
-                        : <ActiveTest answers={test[activeQuestion].answers}
-                                     question={test[activeQuestion].question}
-                                     questionNumber={activeQuestion + 1}
-                                     onAnswerClick={this.onAnswerClickHandler}
-                                     quantityQuestions={test.length}/>
+                            : <ActiveTest answers={test[activeQuestion].answers}
+                                          question={test[activeQuestion].question}
+                                          questionNumber={activeQuestion + 1}
+                                          onAnswerClick={this.onAnswerClickHandler}
+                                          quantityQuestions={test.length}/>
                     }
                 </div>
             </div>

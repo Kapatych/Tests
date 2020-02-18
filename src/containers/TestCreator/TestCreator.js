@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import classes from './TestCreator.module.css';
+import axios from '../../helpers/axios';
+import {changeInput, createControl} from '../../helpers/form';
+
 import Button from "../../components/UI/Button/Button";
 import Select from "../../components/UI/Select/Select";
-import {changeInput, createControl} from '../../helpers/form';
 import Form from "../../components/UI/Form/Form";
 
 const createAnswerControls = (quantity) => {
@@ -71,12 +73,23 @@ class TestCreator extends Component {
             test,
             isFormValid: false,
             rightAnswerId: 1,
-            formControls: this.createFormControls(4)
+            formControls: createFormControls(4)
         });
     };
 
-    createTestHandler = () => {
-        console.log(this.state)
+    createTestHandler = async () => {
+
+        try {
+            await axios.post('test-list.json' , this.state.test);
+            this.setState({
+                test: [],
+                isFormValid: false,
+                rightAnswerId: 1,
+                formControls: createFormControls(4)
+            })
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     submitHandler = event => {

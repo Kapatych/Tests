@@ -5,11 +5,27 @@
     flex-grow: 1;
     width: 100%;
     background: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-
-
 }
 
 .testList h1 {
     color: #ffffff;
+}
 
+.testList ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.testList li {
+    margin-bottom: 10px;
+}
+
+.testList li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.testList li a:hover {
+    color: #363f54;
 }

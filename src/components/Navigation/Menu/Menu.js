@@ -8,8 +8,7 @@ const Menu = ({isOpen, onClose}) => {
     const links = [
         {label: 'Список', to: '/', exact: true},
         {label: 'Авторизация', to: '/auth', exact: false},
-        {label: 'Создать тест', to: '/test-creator', exact: false},
-        {label: 'Тест №1', to: '/test/1', exact: false}
+        {label: 'Создать тест', to: '/test-creator', exact: false}
     ];
 
     const renderLinks = () => {
