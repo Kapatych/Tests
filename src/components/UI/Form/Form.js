@@ -2,7 +2,7 @@ import React from "react";
 import classes from './Form.module.css';
 import Input from "../Input/Input";
 
-const Form = ({formControls, changeHandler, submitHandler, children}) => {
+const Form = ({formControls, changeHandler, submitHandler, children, loginError}) => {
 
     const renderFormControls = (formControls, changeHandler) => {
         return Object.keys(formControls).map((controlName, index) => {
@@ -29,8 +29,9 @@ const Form = ({formControls, changeHandler, submitHandler, children}) => {
               className={classes.form}>
             { renderFormControls(formControls, changeHandler) }
             { children }
+            {loginError ? <span>Invalid email or password! Please, try again</span> : null}
         </form>
     )
-}
+};
 
 export default Form;

@@ -20,7 +20,8 @@ export default class Layout extends Component{
             <div className={classes.layout}>
 
                 <Menu isOpen={this.state.isMenuOpen}
-                      onClose={this.onToggleHandler}/>
+                      onClose={this.onToggleHandler}
+                      isAuth={this.props.isAuth}/>
 
                 <MenuToggle isOpen={this.state.isMenuOpen}
                             onToggle={this.onToggleHandler}/>

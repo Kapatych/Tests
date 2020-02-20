@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import classes from './TestCreator.module.css';
-import axios from '../../helpers/axios';
+import {connect} from "react-redux";
+
 import {changeInput, createControl} from '../../helpers/form';
+import {addQuestion, createTest} from "../../store/actions/testCreator";
 
 import Button from "../../components/UI/Button/Button";
 import Select from "../../components/UI/Select/Select";
@@ -35,7 +37,6 @@ const createFormControls = (quantityOptions = 0) => {
 class TestCreator extends Component {
 
     state = {
-        test: [],
         isFormValid: false,
         rightAnswerId: 1,
         formControls: createFormControls(4)
@@ -59,37 +60,27 @@ class TestCreator extends Component {
                 }
             });
 
-        const test = [...this.state.test];
-        const index = test.length + 1;
-
-        test.push({
+        this.props.addQuestion({
             question: formControls.question.value,
-            id: index,
+            id: this.props.test.length + 1,
             rightAnswerId,
             answers
         });
 
         this.setState({
-            test,
             isFormValid: false,
             rightAnswerId: 1,
             formControls: createFormControls(4)
         });
     };
 
-    createTestHandler = async () => {
-
-        try {
-            await axios.post('test-list.json' , this.state.test);
-            this.setState({
-                test: [],
-                isFormValid: false,
-                rightAnswerId: 1,
-                formControls: createFormControls(4)
-            })
-        } catch (e) {
-            console.log(e)
-        }
+    createTestHandler = () => {
+        this.props.createTest();
+        this.setState({
+            isFormValid: false,
+            rightAnswerId: 1,
+            formControls: createFormControls(4)
+        })
     };
 
     submitHandler = event => {
@@ -126,7 +117,7 @@ class TestCreator extends Component {
                                 disabled={!this.state.isFormValid}>Add question</Button>
                         <Button type='success'
                                 onClick={this.createTestHandler}
-                                disabled={this.state.test.length === 0}>Create test</Button>
+                                disabled={this.props.test.length === 0}>Create test</Button>
                     </Form>
 
                 </div>
@@ -135,4 +126,16 @@ class TestCreator extends Component {
     }
 }
 
-export default TestCreator;
+const mapStateToProps = state => {
+    return {
+        test: state.testCreator.test
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addQuestion: (question) => dispatch(addQuestion(question)),
+        createTest: () => dispatch(createTest())
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(TestCreator);

@@ -1,35 +1,18 @@
 import React, {Component} from 'react';
 import classes from './TestList.module.css';
-import axios from '../../helpers/axios';
 import {NavLink} from "react-router-dom";
 import Loader from "../../components/UI/Loader/Loader";
+import {connect} from "react-redux";
+import {fetchTestList} from "../../store/actions/testList";
 
-export default class TestList extends Component {
+class TestList extends Component {
 
-    state = {
-        tests: [],
-        isLoading: true
-    };
-
-    async componentDidMount() {
-        try {
-            const response = await axios.get('/test-list.json');
-
-            const tests = Object.keys(response.data).map((key, index) => {
-                return {
-                    id: key,
-                    name: `Test № ${index + 1}`
-                }
-            });
-
-            this.setState({tests, isLoading: false});
-        } catch (e) {
-            console.log(e)
-        }
+    componentDidMount() {
+        this.props.fetchTestList()
     }
 
     renderTests = () => {
-        return this.state.tests.map(test => {
+        return this.props.tests.map(test => {
             return (
                 <li key={test.id}>
                     <NavLink to={'/test/' + test.id}>
@@ -42,12 +25,14 @@ export default class TestList extends Component {
 
     render() {
 
+        const {tests, isLoading} = this.props;
+
         return (
             <div className={classes.testList}>
                 <div>
                     <h1>Test List</h1>
                     {
-                        this.state.isLoading
+                        isLoading || !tests
                             ? <Loader/>
                             : <ul>{ this.renderTests() }</ul>
                     }
@@ -57,3 +42,17 @@ export default class TestList extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        tests: state.testList.tests,
+        isLoading: state.testList.isLoading
+    }
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchTestList: () => dispatch(fetchTestList())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestList)

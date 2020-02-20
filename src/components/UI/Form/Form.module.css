@@ -4,3 +4,9 @@
     padding: 15px;
     border-radius: 5px;
 }
+
+.form span {
+    color: #f01f30;
+    font-size: 12px;
+    font-weight: bold;
+}
