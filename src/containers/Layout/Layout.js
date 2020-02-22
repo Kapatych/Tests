@@ -18,7 +18,6 @@ export default class Layout extends Component{
     render() {
         return(
             <div className={classes.layout}>
-
                 <Menu isOpen={this.state.isMenuOpen}
                       onClose={this.onToggleHandler}
                       isAuth={this.props.isAuth}/>

@@ -9,7 +9,7 @@ import {
 } from "../actions/actionTypes";
 
 const initialState = {
-    result: 0, // TODO: {questionId: success || error}
+    result: {},
     isFinished: false,
     activeQuestion: 0,
     test: null,
@@ -26,16 +26,20 @@ const testItemReducer = (state = initialState, {type, payload}) => {
         case FETCH_TEST_FAILURE:
             return {...state, isLoading: false, isError: true};
         case TEST_CHECK_ANSWER:
-            return {...state, result: state.result + 1};
+            return {
+                ...state,
+                result: {...state.result, [payload.questionId]: payload.answerId}
+            };
         case TEST_NEXT_QUESTION:
             return {...state, activeQuestion: state.activeQuestion + 1};
         case TEST_FINISHED:
             return {...state, isFinished: true};
         case TEST_RESET:
-            return {...state,
+            return {
+                ...state,
                 isFinished: false,
                 activeQuestion: 0,
-                result: 0
+                result: {}
             };
         default:
             return state;

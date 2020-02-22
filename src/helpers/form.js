@@ -24,6 +24,8 @@ const validateControl = (value, validation = null) => {
 
     if (validation.minLength) isValid = value.length >= validation.minLength && isValid;
 
+    if (validation.minValue) isValid = value >= 2 && isValid;
+
     return isValid;
 };
 

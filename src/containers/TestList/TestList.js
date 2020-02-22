@@ -11,32 +11,34 @@ class TestList extends Component {
         this.props.fetchTestList()
     }
 
-    renderTests = () => {
-        return this.props.tests.map(test => {
-            return (
-                <li key={test.id}>
-                    <NavLink to={'/test/' + test.id}>
-                        {test.name}
-                    </NavLink>
-                </li>
-            )
-        })
+    renderList = () => {
+        const {tests, isLoading} = this.props;
+        if (isLoading || !tests ) return <Loader/>;
+
+        return <ul>
+                {
+                    this.props.tests.map(test => {
+                        return (
+                            <li key={test.id}>
+                                <NavLink to={'/test/' + test.id}>
+                                    {test.name}
+                                </NavLink>
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+
+
+
     };
 
     render() {
-
-        const {tests, isLoading} = this.props;
-
         return (
             <div className={classes.testList}>
                 <div>
                     <h1>Test List</h1>
-                    {
-                        isLoading || !tests
-                            ? <Loader/>
-                            : <ul>{ this.renderTests() }</ul>
-                    }
-
+                    { this.renderList() }
                 </div>
             </div>
         )

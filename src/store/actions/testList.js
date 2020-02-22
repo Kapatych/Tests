@@ -7,9 +7,10 @@ export const fetchTestList = () => async dispatch => {
         const response = await axios.get('/test-list.json');
 
         const tests = Object.keys(response.data).map((key, index) => {
+            const name = response.data[key].name;
             return {
                 id: key,
-                name: `Test № ${index + 1}`
+                name: `${index + 1}. ${name}`
             }
         });
 

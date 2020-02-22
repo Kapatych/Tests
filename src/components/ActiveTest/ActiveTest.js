@@ -7,10 +7,9 @@ const ActiveTest = ({questionNumber, question, answers, onAnswerClick, quantityQ
     return (
         <div className={classes.activeTest}>
             <p className={classes.activeQuestion}>
-                <span> {questionNumber}. {question}</span>
+                <span>{question}</span>
                 <span> {questionNumber} / {quantityQuestions}</span>
             </p>
-
             <AnswersList answers={answers} onAnswerClick={onAnswerClick}/>
         </div>
     )

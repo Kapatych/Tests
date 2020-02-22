@@ -11,7 +11,7 @@ export const fetchTestItem = testId => async dispatch => {
     dispatch({type: FETCH_TEST_REQUEST});
 
     try {
-        const response = await axios(`test-list/${testId}.json`);
+        const response = await axios(`test-list/${testId}/questions.json`);
         dispatch({type: FETCH_TEST_SUCCESS, payload: response.data})
     } catch (e) {
         dispatch({type: FETCH_TEST_FAILURE});
@@ -22,8 +22,8 @@ export const testAnswerClick = answerId => (dispatch, getState) => {
     const state = getState().testItem;
 
     const activeQuestion = state.test[state.activeQuestion];
-    if (answerId === activeQuestion.rightAnswerId) {
-        dispatch({type: TEST_CHECK_ANSWER})
+    if (answerId !== activeQuestion.rightAnswerId) {
+        dispatch({type: TEST_CHECK_ANSWER, payload: {questionId: activeQuestion.id, answerId: answerId}})
     }
 
     const timeout = window.setTimeout(() => {

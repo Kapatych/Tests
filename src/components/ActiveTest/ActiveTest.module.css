@@ -11,3 +11,7 @@
     display: flex;
     justify-content: space-between;
 }
+
+.activeQuestion span{
+    max-width: 490px;
+}

@@ -4,5 +4,24 @@
     border: 2px solid #fff;
     border-radius: 5px;
     box-sizing: border-box;
-    margin: 0 10px;
+    margin: 0 10px 50px;
+}
+
+.question {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.question i {
+    margin-right: 15px;
+}
+.finishedTest span {
+    margin-right: 15px;
+}
+.success {
+    font-weight: 800;
 }

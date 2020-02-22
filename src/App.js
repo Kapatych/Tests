@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import {connect} from "react-redux";
 
+import ErrorBoundary from "./containers/ErrorBoundary/ErrorBoundary";
 import Layout from "./containers/Layout/Layout";
 import TestList from "./containers/TestList/TestList";
 import Auth from "./containers/Auth/Auth";
@@ -10,36 +11,39 @@ import Test from "./containers/Test/Test";
 import Logout from "./components/Logout/Logout";
 import {autoLogin} from "./store/actions/auth";
 
-const App = (props) => {
-    //TODO: Change to class component ?!
-    React.useEffect(() => {
-        props.autoLogin()
-    }, [props]);
+class App extends Component {
 
-    return (
-        <BrowserRouter>
-            <Layout isAuth={props.isAuth}>
-                {props.isAuth
-                    ?
-                    <Switch>
-                        <Route path='/' component={TestList} exact={true}/>
-                        <Route path='/test/:id' component={Test}/>
-                        <Route path='/logout' component={Logout}/>
-                        <Route path='/test-creator' component={TestCreator}/>
-                        <Redirect to={'/'} />
-                    </Switch>
-                    :
-                    <Switch>
-                        <Route path='/' component={TestList} exact={true}/>
-                        <Route path='/test/:id' component={Test}/>
-                        <Route path='/auth' component={Auth}/>
-                        <Redirect to={'/'} />
-                    </Switch>
-                }
-            </Layout>
-        </BrowserRouter>
-    );
-};
+    componentDidMount() {
+        this.props.autoLogin()
+    }
+
+    render() {
+        return (
+            <ErrorBoundary>
+                <BrowserRouter>
+                    <Layout isAuth={this.props.isAuth}>
+                        {this.props.isAuth
+                            ?
+                            <Switch>
+                                <Route path='/' component={TestList} exact={true}/>
+                                <Route path='/test/:id' component={Test}/>
+                                <Route path='/test-creator' component={TestCreator}/>
+                                <Route path='/logout' component={Logout}/>
+                                <Redirect to={'/'}/>
+                            </Switch>
+                            :
+                            <Switch>
+                                <Route path='/' component={TestList} exact={true}/>
+                                <Route path='/test/:id' component={Test}/>
+                                <Route path='/auth' component={Auth}/>
+                            </Switch>
+                        }
+                    </Layout>
+                </BrowserRouter>
+            </ErrorBoundary>
+        );
+    }
+}
 
 const mapStateToProps = state => {
     return {
